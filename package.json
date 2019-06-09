@@ -1,0 +1,90 @@
+{
+  "name": "electron-react-starter-kit",
+  "productName": "ElectronReact",
+  "version": "1.0.0",
+  "description": "Electron React",
+  "main": "./app/main.prod.js",
+  "repository": "git@github.com:planetw/electron-react-starter-kit.git",
+  "author": "Plane <planetw.git@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "package": "yarn build && electron-builder build --publish never",
+    "build": "concurrently \"yarn main:build\" \"yarn renderer:build\"",
+    "main:build": "env-cmd -f ./env/.env.prod webpack --config ./configs/webpack.config.main.prod.babel.js --colors",
+    "renderer:build": "env-cmd -f ./env/.env.prod webpack --config ./configs/webpack.config.renderer.prod.babel.js --colors",
+    "dev": "env-cmd -f ./env/.env.dev webpack-dev-server --config configs/webpack.config.renderer.dev.babel.js",
+    "renderer:dev": "env-cmd -f ./env/.env.dev webpack-dev-server --config configs/webpack.config.renderer.dev.babel.js",
+    "main:dev": "env-cmd -f ./env/.env.dev electron -r @babel/register ./app/main.dev.js"
+  },
+  "dependencies": {
+    "electron-debug": "^3.0.0",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.4.5",
+    "@babel/plugin-syntax-dynamic-import": "^7.2.0",
+    "@babel/preset-env": "^7.4.5",
+    "@babel/preset-react": "^7.0.0",
+    "@babel/register": "^7.4.4",
+    "babel-loader": "^8.0.6",
+    "concurrently": "^4.1.0",
+    "css-loader": "^2.1.1",
+    "electron": "^5.0.2",
+    "electron-builder": "^20.41.0",
+    "electron-devtools-installer": "^2.2.4",
+    "env-cmd": "^9.0.3",
+    "html-webpack-plugin": "^3.2.0",
+    "mini-css-extract-plugin": "^0.7.0",
+    "postcss": "^7.0.16",
+    "postcss-loader": "^3.0.0",
+    "postcss-preset-env": "^6.6.0",
+    "style-loader": "^0.23.1",
+    "webpack": "^4.32.2",
+    "webpack-cli": "^3.3.2",
+    "webpack-dev-server": "^3.4.1",
+    "webpack-merge": "^4.2.1"
+  },
+  "build": {
+    "appId": "com.example.react",
+    "productName": "ElectronReact",
+    "files": [
+      "dist/",
+      "app/main.prod.js",
+      "app/main.prod.js.map",
+      "configs/utils",
+      "package.json"
+    ],
+    "directories": {
+      "buildResources": "resources",
+      "output": "release"
+    },
+    "dmg": {
+      "contents": [
+        {
+          "x": 130,
+          "y": 220
+        },
+        {
+          "x": 410,
+          "y": 220,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
+    },
+    "win": {
+      "target": [
+        "nsis",
+        "msi"
+      ]
+    },
+    "publish": {
+      "provider": "github",
+      "owner": "planetw",
+      "repo": "electron-react-starter-kit",
+      "private": false
+    }
+  },
+  "browserslist": "electron 5.0"
+}
